@@ -7,6 +7,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.0] (2021-06-14)
+No change.
+
 ## [0.1.0] (2021-02-04)
 ### Added
 - Add `b64:encode/1` and `b64:encode/2` functions.
