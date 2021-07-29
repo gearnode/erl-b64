@@ -17,6 +17,13 @@
 -export([encode/1, encode/2,
          decode/1, decode/2]).
 
+-export_type([decode_error_reason/0]).
+
+-type decode_error_reason() ::
+        invalid_encoding
+      | {invalid_data, binary()}
+      | {invalid_base64_char, byte()}.
+
 -spec encode(binary()) -> binary().
 encode(Bin) when is_binary(Bin) ->
   encode(Bin, []).
@@ -74,14 +81,14 @@ dec_base64_digit(63) ->
   $_.
 
 -spec decode(binary()) ->
-        {ok, binary()} | {error, term()}.
+        {ok, binary()} | {error, decode_error_reason()}.
 decode(Bin) when is_binary(Bin) ->
   decode(Bin, []).
 
 -spec decode(binary(), Options) ->
-        {ok, binary()} | {error, term()} when
-    Options :: [Option],
-    Option :: nopad.
+        {ok, binary()} | {error, decode_error_reason()}
+          when Options :: [Option],
+               Option :: nopad.
 decode(Bin, Options) when is_binary(Bin), is_list(Options) ->
   try
     case proplists:get_bool(nopad, Options) of
